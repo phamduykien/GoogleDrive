@@ -11,7 +11,7 @@ const SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis
 // time.
 const TOKEN_PATH = 'token.json';
 const args = process.argv;
-var folderPath = 'D:\\Install';
+var folderPath = '/opt/pdkien/hello-world';
 
 // Load client secrets from a local file.
 fs.readFile('credentials.json', (err, content) => {
@@ -132,39 +132,56 @@ function listDrive(auth) {
 //upload file to store in google drive team
 //Created By PDKIEN 27/08/2019
 function storeFiles(auth) {
-    //List file on local
-    fs.readdir(folderPath, {
-        withFileTypes: true
-    }, (err, res) => {
-        res.forEach((e) => {
-            
-        });
-    });
-
-
-    console.log("auth", JSON.stringify(auth));
     const drive = google.drive({
         version: 'v3',
         auth
     });
-    var fileMetadata = {
-        'name': 'dotnetfx35.exe'
-    };
-    var media = {
-        mimeType: 'application/vnd.microsoft.portable-executable',
-        //PATH OF THE FILE FROM YOUR COMPUTER
-        body: fs.createReadStream('D:\\Install\\dotNetFx\\dotnetfx35.exe')
-    };
-    drive.files.create({
-        resource: fileMetadata,
-        media: media,
-        fields: 'id'
-    }, function (err, file) {
+    //List file on local
+    fs.readdir(folderPath, {
+        withFileTypes: true
+    }, (err, res) => {
         if (err) {
-            // Handle error
-            console.error(err);
+            console.log(err);
         } else {
-            console.log('File Id: ', file.data.id);
+            res.forEach((e) => {
+                upload(e, drive);
+            });
         }
+
     });
+
+
+    // console.log("auth", JSON.stringify(auth));
+    // const drive = google.drive({
+    //     version: 'v3',
+    //     auth
+    // });
+    // var fileMetadata = {
+    //     'name': 'dotnetfx35.exe'
+    // };
+    // var media = {
+    //     mimeType: 'application/vnd.microsoft.portable-executable',
+    //     //PATH OF THE FILE FROM YOUR COMPUTER
+    //     body: fs.createReadStream('D:\\Install\\dotNetFx\\dotnetfx35.exe')
+    // };
+    // drive.files.create({
+    //     resource: fileMetadata,
+    //     media: media,
+    //     fields: 'id'
+    // }, function (err, file) {
+    //     if (err) {
+    //         // Handle error
+    //         console.error(err);
+    //     } else {
+    //         console.log('File Id: ', file.data.id);
+    //     }
+    // });
+}
+
+function upload(item, drive) {
+    if (item.isDirecoty()) {
+
+    } else {
+
+    }
 }
