@@ -106,8 +106,7 @@ function listDrive(auth) {
         version: 'v3',
         auth
     });
-    drive.files.list({
-        pageSize: 10,
+    drive.files.list({       
         "corpora": "drive",
         "driveId": "0AA1g4vGWGsYVUk9PVA",
         "includeItemsFromAllDrives": true,
@@ -180,7 +179,23 @@ function storeFiles(auth) {
 
 function upload(item, drive) {
     if (item.isDirectory()) {
-//Check exist Directory on Drive, if not 
+        //Check exist Directory on Drive, if not 
+        let s="mimeType='application/vnd.google-apps.folder' and name='"+item.name+"'";
+        let s="mimeType='application/vnd.google-apps.folder' and name='"+"Session 1"+"'";
+        drive.files.list({
+            "corpora": "drive",
+            "driveId": "0AA1g4vGWGsYVUk9PVA",
+            "includeItemsFromAllDrives": true,
+            "includeTeamDriveItems": true,
+            "pageSize": 15,
+            "supportsAllDrives": true,
+            "supportsTeamDrives": true,
+            "q":s
+        },function (err, res) {
+            if (!err){
+                let map=res;
+            }
+        });
     } else {
 
     }
