@@ -179,8 +179,8 @@ function storeFiles(auth) {
 }
 
 function upload(item, drive) {
-    if (item.isDirecoty()) {
-
+    if (item.isDirectory()) {
+//Check exist Directory on Drive, if not 
     } else {
 
     }
